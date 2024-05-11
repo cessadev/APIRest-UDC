@@ -63,4 +63,16 @@ class OrderRepositoryTest {
         // then
         assertEquals(2, orders.size());
     }
+
+    @Test
+    void shouldCountByDeliveryStatus() {
+        // given
+        String deliveryStatus = "DELIVERED";
+        // when
+        // filter, orderNumber, since, until, status, customerId
+        int totalRegister = orderRepository.countFindByFilter(
+                4, null, null, null, deliveryStatus, null);
+        // then
+        assertEquals(2, totalRegister);
+    }
 }

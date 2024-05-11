@@ -1,5 +1,7 @@
 package com.cessadev.api_rest_udc.model.dtos;
 
+import com.cessadev.api_rest_udc.model.entities.Customer;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -10,4 +12,14 @@ public record OrderDTO(
     LocalDateTime deliveryDate,
     String status,
     CustomerDTO customer) implements Serializable {
+    public static Object fromFields(Object[] tuple, String[] aliases) {
+        return new OrderDTO(
+                (Long) tuple[0], // id
+                (String) tuple[1], // orderNumber
+                (LocalDateTime) tuple[2], // orderDate
+                (LocalDateTime) tuple[3], // deliveryDate
+                (String) tuple[4], // status
+                CustomerDTO.from((Customer) tuple[5]) // customer
+        );
+    }
 }

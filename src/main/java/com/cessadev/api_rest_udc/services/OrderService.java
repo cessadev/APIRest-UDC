@@ -40,18 +40,17 @@ public class OrderService {
                     sinceDate = LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                     untilDate = LocalDateTime.parse(until, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 }
-
-                List<OrderDTO> orders = orderRepository.findByFilter(filter, orderNumber, sinceDate, untilDate, status, customer.getId(), page, size);
-
-                int total = orderRepository.countFindByFilter(filter, orderNumber, sinceDate, untilDate, status, customer.getId());
-
-                PagingDataDTO pagingData = new PagingDataDTO(page, size, total);
-
-                return new OrderResultDTO(orders, pagingData);
-
-            } catch (DateTimeParseException exception) {
+            } catch(DateTimeParseException | NullPointerException e) {
                 throw new RuntimeException("Invalid date format");
             }
+
+            List<OrderDTO> orders = orderRepository.findByFilter(filter, orderNumber, sinceDate, untilDate, status, customer.getId(), page, size);
+
+            int total = orderRepository.countFindByFilter(filter, orderNumber, sinceDate, untilDate, status, customer.getId());
+
+            PagingDataDTO pagingData = new PagingDataDTO(page, size, total);
+
+            return new OrderResultDTO(orders, pagingData);
 
         } catch (RuntimeException exception) {
             return new OrderResultDTO("L001", exception.getMessage());

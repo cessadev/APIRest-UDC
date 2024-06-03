@@ -1,8 +1,11 @@
 package com.cessadev.api_rest_udc.model.dtos;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Getter
 public class OrderResultDTO extends BaseResultDTO implements Serializable {
 
     private List<OrderDTO> orders;

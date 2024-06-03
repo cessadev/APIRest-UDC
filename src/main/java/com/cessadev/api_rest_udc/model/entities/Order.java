@@ -1,14 +1,14 @@
 package com.cessadev.api_rest_udc.model.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -36,5 +36,24 @@ public class Order {
     private Customer customer;
 
     @OneToMany(mappedBy = "order")
+    @ToString.Exclude
     private Set<OrderDetails> orderDetails;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        if (id != order.id) return false;
+        return orderNumber.equals(order.orderNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Long.hashCode(id);
+        result = 31 * result + orderNumber.hashCode();
+        return result;
+    }
 }

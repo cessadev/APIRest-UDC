@@ -13,6 +13,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -21,7 +22,7 @@ class OrderRepositoryTest {
     @Container
     @ServiceConnection
     static PostgreSQLContainer<?> postgreSQLContainer
-            = new PostgreSQLContainer<>("postgres:14-alpine3.18");
+            = new PostgreSQLContainer<>("postgres:16-alpine3.19");
 
     @Test
     void connectionTest() {

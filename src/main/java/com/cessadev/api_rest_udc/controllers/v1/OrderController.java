@@ -4,6 +4,8 @@ import com.cessadev.api_rest_udc.model.dtos.OrderResultDTO;
 import com.cessadev.api_rest_udc.services.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -88,7 +90,12 @@ public class OrderController {
                             , required = true),
                     @Parameter(name = "page_number", description = "Page number"),
                     @Parameter(name = "page_size", description = "Page size")
-            }
+            },
+            description = "Get orders by filter",
+            responses = {
+                    @ApiResponse(responseCode = "500", description = "Internal server error")
+            },
+            security = {@SecurityRequirement(name = "security_auth")}
     )
     public ResponseEntity<OrderResultDTO> byFilter(
         @RequestParam(name = "filter", defaultValue = "0") int filter,
